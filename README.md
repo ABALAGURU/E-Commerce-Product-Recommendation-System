@@ -1,6 +1,6 @@
 ## E-Commerce-Product-Recommendation-System
 
-### This is a fully functional E-Commerce Website built with Django (or Flask, React, Node.js, etc.). It supports user authentication, product management, shopping cart, checkout, and order tracking.
+### This project is an E-Commerce Website that provides personalized product recommendations based on the user's recent browsing history. It uses Content-Based Filtering to suggest similar products based on categories and other attributes.
 # Technologies Used:
                    ## Frontend : HTML
                    ## Backend : Flask
