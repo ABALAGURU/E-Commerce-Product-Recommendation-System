@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce</title>
+    <script>
+        async function submitSearch() {
+            const query = document.getElementById('searchInput').value.trim();
+
+            if (!query) {
+                alert("Please enter a search query.");
+                return;
+            }
+            const response = await fetch('/recommend', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ query: query })
+            });
+
+            const data = await response.json();
+
+            // display recommended products
+            const recommendationsDiv = document.getElementById('recommendations');
+            if (data.recommendations) {
+                recommendationsDiv.innerHTML = "<h3>Recommended Products:</h3>" + data.recommendations.join('<br>');
+            } else {
+                recommendationsDiv.innerHTML = "<h3>No recommendations found.</h3>";
+            }
+            updateSearchHistory();
+        }
+
+        // function for display search history
+        async function updateSearchHistory() {
+            const response = await fetch('/search_history');
+            const data = await response.json();
+
+            const historyDiv = document.getElementById('searchHistory');
+            if (data.search_history.length > 0) {
+                historyDiv.innerHTML = "<h3>Search History:</h3>" + data.search_history.join('<br>');
+            } else {
+                historyDiv.innerHTML = "<h3>No search history available.</h3>";
+            }
+        }
+        window.onload = updateSearchHistory;
+    </script>
+</head>
+<body>
+    <h1>E-Commerce</h1>
+
+    <input type="text" id="searchInput" placeholder="Enter product name" />
+    <button onclick="submitSearch()">Search</button>
+
+    <div id="recommendations"></div>
+    <div id="searchHistory"></div>
+</body>
+</html>
